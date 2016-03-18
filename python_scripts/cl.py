@@ -2,18 +2,13 @@
 
 import socket
 
-
 s = socket.socket()
-HOST = socket.gethostname()
-PORT = 80
-s.bind((HOST, PORT))
-s.listen(5)
+target = '52.169.181.92'
+port = 80
+s.connect((target,port))
 
-data = "hello"
-while True:
-        conn, addr = s.accept()
-        print 'Got connection from', addr
-        conn.send(data)
-        c.close()
-print "Exiting Main Thread"
+data = s.recv(1024)
+s.close()
+print 'Received', repr(data)
+
 
