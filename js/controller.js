@@ -15,7 +15,15 @@
         var _this = this;
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
         $scope.listening = false;
+
+	//Change to enable debug buttons 
         $scope.debug = false;
+	var exec = require('child_process').exec;
+	var moment = require('moment');
+	
+	//Music Flag 
+	var music_playing = false;
+   
         $scope.focus = "default";
         $scope.user = {};
         $scope.commands = commands
@@ -31,7 +39,14 @@
         
         //Update the time
         function updateTime(){
-            $scope.date = new moment();
+	    $scope.date = new moment();
+	    var now = new moment();
+            var hour = now.format('H');
+	    if (hour < 0) {
+		hour = -hour
+	    }
+	    $scope.hour = hour;
+	    $scope.minutes = now.format('mm A');
         }
 
         // Reset the command text
@@ -41,6 +56,7 @@
 
         _this.init = function() {
             var tick = $interval(updateTime, 1000);
+	    omx = require('omxcontrol');
             updateTime();
             GeolocationService.getLocation({enableHighAccuracy: true}).then(function(geoposition){
                 console.log("Geoposition", geoposition);
@@ -143,6 +159,14 @@
 
             //AnnyangService.setLanguage('de-DE');
 
+	    //IFTTT
+            AnnyangService.addCommand(commands['connect']['voice'], function() {
+                console.debug("IFTTT");
+		
+		exec('curl -X POST https://maker.ifttt.com/trigger/test/with/key/ck5KqyErNs1eb_CGKTyZWj')
+               
+            });
+
             // List commands
             AnnyangService.addCommand(commands['list']['voice'], function() {
                 console.debug("Here is a list of commands...");
@@ -209,6 +233,13 @@
                 $scope.focus = "map";
             });
 
+	    AnnyangService.addCommand(commands['change_greeting']['voice'], function(name) {
+                console.debug("Changing greeting");
+		$scope.greeting = name;
+                $scope.focus = "default"
+            });
+
+
             // Search images
             AnnyangService.addCommand(commands['images_search']['voice'], function(term) {
                 console.debug("Showing", term);
@@ -218,6 +249,38 @@
             AnnyangService.addCommand(commands['account_set_name']['voice'], function(name) {
                 console.debug("Hi", name, "nice to meet you");
                 $scope.user.name = name;
+            });
+
+	    // Play music - Author:chrispanag
+            AnnyangService.addCommand(commands['music']['voice'], function() {
+
+		//If music is not playing play some music
+		if (!music_playing) {
+
+			console.debug("Playing some music...");
+			
+			omx.start('music/test.mp3');
+			music_playing = true;
+
+		} else {
+			console.debug('Music is already playing');
+		}
+
+                $scope.focus = "songs";
+            });
+
+	   // Stop music - Author:chrispanag
+            AnnyangService.addCommand(commands['pause']['voice'], function() {
+
+		if (music_playing) {
+			console.debug("Stop playing music");
+			exec('pkill -f omxplayer');
+			music_playing = false;
+		} else {
+			console.debug("Music is not playing");
+		}
+
+		$scope.focus = "default";
             });
 
             // Set a reminder
@@ -246,6 +309,14 @@
                     $scope.gifimg = GiphyService.giphyImg();
                     $scope.focus = "gif";
                 });
+            });
+
+	    // Change name
+            AnnyangService.addCommand(commands['account_set_hate']['voice'], function(name) {
+                console.debug("Hi", name, "I hate you");
+                $scope.user.name = "Malakas";
+	        $scope.focus = "default";
+                angular.module('music', ['angularSoundManager'])
             });
 
             // Show xkcd comic

@@ -30,6 +30,10 @@
     "electron-prebuilt": "^0.36.5",
     "install": "^0.5.4",
     "npm": "^3.7.5",
-    "wiredep": "^3.0.0"
+    "wiredep": "^3.0.0",
+    "method-override" : "~2.1.2",
+    "morgan" : "~1.2.2",
+    "ifttt" : "*",
+    "moment" : "*"
   }
 }

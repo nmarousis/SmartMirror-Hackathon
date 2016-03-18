@@ -29,6 +29,11 @@ var commands = {
         "voice": "Show map",
         "description" : "Shows a map of your current city."
     },
+    "connect": {
+        "text" : "connect",
+        "voice": "connect",
+        "description" : "Ifttt"
+    },
     "map_location": {
         "text" : "Show map of ________",
         "voice": "Show (me a) map of *location",
@@ -58,6 +63,16 @@ var commands = {
         "text" : "My name is ________",
         "voice": "My (name is)(name\\'s) *name",
         "description" : "My (name is)(name\\'s) *name"
+    },
+    "change_greeting": {
+        "text" : "Set greeting to ________",
+        "voice": "Set greeting to *name",
+        "description" : "Set greeting to *name"
+    },
+    "account_set_hate": {
+        "text" : "My name is ________",
+        "voice": "Fuck",
+        "description" : "Fuck"
     },
     "images_search": {
         "text" : "Show me ________",
@@ -93,5 +108,15 @@ var commands = {
         "text" : "Turn the (state) light (action)",
         "voice": "(turn) (the) :state (the) light(s) *action",
         "description" : "(turn) (the) :state (the) light(s) *action"
+    },
+    "music": {
+        "text" : "music",
+        "voice": "music",
+        "description" : "music"
+    },
+    "pause": {
+        "text" : "pause",
+        "voice": "stop",
+        "description" : "pause music"
     }
 };
