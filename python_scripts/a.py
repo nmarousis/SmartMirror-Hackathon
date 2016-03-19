@@ -6,8 +6,6 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
     data = request.get_data()
-    print data
-    print 'debug'
 
     #Here we need to put a client socket
     s = socket.socket()
