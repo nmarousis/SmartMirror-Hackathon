@@ -35,6 +35,13 @@
       moment.locale(config.language);
       console.log('moment local', moment.locale());
 
+      var exec2 = require('child_process').exec, child2;
+      child2 = exec2('../python_scripts/cl2.py',
+        function(error, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+        });
+      child2();
+
       //Update the time
       function updateTime(){
         $scope.date = new moment();
