@@ -9,7 +9,7 @@ def hello_world():
     print data
     print 'debug'
 
-    //Here we need to put a client socket
+    #Here we need to put a client socket
     s = socket.socket()
     target = ''
     port = 1325
