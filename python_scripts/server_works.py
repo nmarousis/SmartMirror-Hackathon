@@ -5,7 +5,7 @@ s = socket.socket()
 s2 = socket.socket()
 
 HOST = ''
-PORT = 1425
+PORT = 80
 PORT2 = 1325
 
 s.bind((HOST, PORT))
